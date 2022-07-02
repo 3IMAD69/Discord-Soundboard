@@ -26,23 +26,7 @@ const client = new Discord.Client({
   ]
   
 });
-async function Testing(message){
-  const player = await createAudioPlayer();
-  const resource = await createAudioResource(path.join(__dirname + 'test.mp3'));
-  const connection = await joinVoiceChannel({
-            channelId: message.member.voice.channel.id,
-            guildId: message.guild.id,
-            adapterCreator: message.guild.voiceAdapterCreator,
-          });
-  
-// Will use FFmpeg with volume control enabled
-resource = createAudioResource(join(__dirname, 'test.mp3'), { inlineVolume: true });
-resource.volume.setVolume(0.5);
 
-
-
-player.play(resource);
-}
 async function PlayAudio(message,audio,seconds){
    
           
@@ -79,52 +63,11 @@ async function PlayAudio(message,audio,seconds){
             },5000)
           
 }
-function  RandomKick(message,seconds){
-  
-        
-      const IDS= [] ;
 
-         const Channel = message.member.voice.channel ;
-         
-        if(!Channel){
-          message.channel.send("Dkhul lchi room ! ")
-        }else{
-             members = Channel.members ; 
-              for (const m of members){
-                     
-                    if(!m[1].user.bot){
-                      IDS.push(m[0]);
-                    }
-                        
-              }
-                const RandomNigga = IDS[Math.floor(Math.random()*IDS.length)];
-                if(RandomNigga!=834070153657581568 ){
-                  setTimeout(()=>{
-                            
-                message.guild.members.cache.get(RandomNigga).voice.setChannel(null)
-                  } , seconds)
-                   
-                }else{
-                  RandomKick(message,"demontime",seconds);
-                  
-                }
-        }
-}
 
 client.on('ready',()=>{
   console.log("im in")
- 
 
-  command(client, 'rk',  (message) => {
-   // message.channel.send('makhedamach db mglitchya m3a soundboard !!')
-     message.channel.send('Looking for Da7iya :smiling_imp:  ! ')
-     PlayAudio(message,"demontime",17000)
-})
-
-  command(client ,'ttt',async (message)=>{
-          Testing(message)
-    
-  })
 
 
 command(client,'sb',async (message)=>{
@@ -211,7 +154,7 @@ client.on("interactionCreate",async (interaction)=>{
   if(interaction.isButton()){
     
     if(!interaction.member.voice.channel){
-       await interaction.reply("Dkhul lchi room")
+       await interaction.reply("You're not in a voice channel")
        return ;
     }
     await  PlayAudio(interaction,interaction.customId,null) 
